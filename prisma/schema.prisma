@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model enrollment {
+  id             Int       @id(map: "enrollment_pk") @default(autoincrement())
+  familyId       Int?
+  userId         Int
+  birthday       DateTime? @db.Timestamp(6)
+  phone          String?   @db.VarChar(255)
+  profilePicture String    @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw22VKxFrAADL1SX0TdBhgNx&ust=1679698058434000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMDboIKR8_0CFQAAAAAdAAAAABAE")
+  createdAt      DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime  @default(now()) @db.Timestamp(6)
+  family         family?   @relation(fields: [familyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "enrollment_fk0")
+  user           user      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "enrollment_fk1")
+}
+
+model family {
+  id         Int          @id(map: "family_pk") @default(autoincrement())
+  name       String       @db.VarChar(255)
+  createdAt  DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt  DateTime     @default(now()) @db.Timestamp(6)
+  enrollment enrollment[]
+  task       task[]
+}
+
+model points {
+  id          Int  @id(map: "points_pk") @default(autoincrement())
+  userId      Int
+  totalpoints Int
+  user        user @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "points_fk0")
+}
+
+model session {
+  id        Int      @id(map: "session_pk") @default(autoincrement())
+  userId    Int
+  token     String
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  user      user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "session_fk0")
+}
+
+model task {
+  id          Int           @id(map: "task_pk") @default(autoincrement())
+  name        String        @db.VarChar(255)
+  when        DateTime      @db.Timestamp(6)
+  familyId    Int
+  status      String        @db.VarChar(10)
+  updatedAt   DateTime      @default(now()) @db.Timestamp(6)
+  createdAt   DateTime      @default(now()) @db.Timestamp(6)
+  family      family        @relation(fields: [familyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "task_fk0")
+  taskMembers taskMembers[]
+}
+
+model taskMembers {
+  id        Int      @id(map: "taskMembers_pk") @default(autoincrement())
+  userId    Int
+  taskId    Int
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  user      user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "taskMembers_fk0")
+  task      task     @relation(fields: [taskId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "taskMembers_fk1")
+}
+
+model user {
+  id          Int           @id(map: "user_pk") @default(autoincrement())
+  email       String        @unique @db.VarChar(255)
+  password    String        @db.VarChar(255)
+  createdAt   DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime      @default(now()) @db.Timestamp(6)
+  enrollment  enrollment[]
+  points      points[]
+  session     session[]
+  taskMembers taskMembers[]
+}
