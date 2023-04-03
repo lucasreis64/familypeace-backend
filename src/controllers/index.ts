@@ -1,3 +1,3 @@
 export * from "./authentication-controller";
 export * from "./users-controller";
-
+export * from "./enrollment-controller";

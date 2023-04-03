@@ -7,7 +7,6 @@ import jwt from "jsonwebtoken";
 import { invalidCredentialsError } from "./errors";
 
 async function signIn(params: SignInParams): Promise<SignInResult> {
-  console.log("'oi'");
   const { email, password } = params;
 
   const user = await getUserOrFail(email);

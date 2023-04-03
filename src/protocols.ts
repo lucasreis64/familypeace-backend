@@ -3,15 +3,22 @@ export type ApplicationError = {
   message: string;
 };
 
-//Regra de Negócio
-export type AddressEnrollment = {
-  logradouro: string,
-  complemento: string,
-  bairro: string,
-  cidade: string,
-  uf: string,
-  error?: string
+export type enrollmentWithFamily = {
+    id: number,
+    family: string | null,
+    birthday: Date | null,
+    phone: string | null,
+    profilePicture: string,
+}
 
+export type enrollmentWithObjectFamily = {
+  id: number,
+  family?: {
+    name: string | null,
+  },
+  birthday: Date | null,
+  phone: string | null,
+  profilePicture: string,
 }
 
 export type RequestError = {

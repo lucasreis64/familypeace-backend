@@ -3,6 +3,7 @@ import cors from "cors";
 import { usersRouter, authenticationRouter } from "@/routers";
 import { loadEnv, connectDb, disconnectDB } from "@/config";
 import { handleApplicationErrors } from "@/middlewares";
+import { enrollmentRouter } from "./routers/enrollment-router";
 
 loadEnv();
 
@@ -14,6 +15,7 @@ app
   .get("/health", (_req, res) => res.send("OK!"))
   .use("/sign-up", usersRouter)
   .use("/sign-in", authenticationRouter)
+  .use("/enrollment", enrollmentRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
