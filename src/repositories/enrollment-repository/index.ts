@@ -3,8 +3,18 @@ import { Prisma } from "@prisma/client";
 
 async function findById(userId: number) {
   return prisma.enrollment.findFirst({
-    where: { userId: userId },
-
+    where: { userId },
+    select: {
+      id: true,
+      birthday: true,
+      phone: true,
+      profilePicture: true,
+      family: {
+        select: {
+          name: true,
+        }
+      }
+    },
   });
 }
 

@@ -5,7 +5,7 @@ import httpStatus from "http-status";
 
 export async function getEnrollmentByUser(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
-  console.log(userId);
+
   try {
     const enrollment = await enrollmentsService.getEnrollmentByUserId(userId);
 

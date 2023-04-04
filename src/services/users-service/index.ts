@@ -1,3 +1,4 @@
+import enrollmentRepository from "@/repositories/enrollment-repository";
 import userRepository from "@/repositories/user-repository";
 import { user } from "@prisma/client";
 import bcrypt from "bcrypt";
@@ -7,10 +8,15 @@ export async function createUser({ email, password }: CreateUserParams): Promise
   await validateUniqueEmailOrFail(email);
 
   const hashedPassword = await bcrypt.hash(password, 12);
-  return userRepository.create({
+
+  const newUser = await userRepository.create({
     email,
     password: hashedPassword,
   });
+
+  await enrollmentRepository.upsert(newUser.id, { userId: newUser.id }, {});
+
+  return newUser;
 }
 
 async function validateUniqueEmailOrFail(email: string) {
