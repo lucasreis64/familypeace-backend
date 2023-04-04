@@ -4,9 +4,14 @@ import { exclude } from "@/utils/prisma-utils";
 
 async function getEnrollmentByUserId(userId: number): Promise<enrollmentWithFamily> {
   const enrollment = await enrollmentRepository.findById(userId) as enrollmentWithObjectFamily;
+
+  let family = null;
+
+  if (enrollment.family)
+    family = enrollment.family.name;
   
   return {
-    ...exclude(enrollment, "family"), family: enrollment.family.name,
+    ...exclude(enrollment, "family"), family: family,
   };
 }
 

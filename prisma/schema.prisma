@@ -10,10 +10,10 @@ datasource db {
 model enrollment {
   id             Int       @id(map: "enrollment_pk") @default(autoincrement())
   familyId       Int?
-  userId         Int
+  userId         Int       @unique
   birthday       DateTime? @db.Timestamp(6)
   phone          String?   @db.VarChar(255)
-  profilePicture String    @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw22VKxFrAADL1SX0TdBhgNx&ust=1679698058434000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMDboIKR8_0CFQAAAAAdAAAAABAE")
+  profilePicture String    @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
   createdAt      DateTime  @default(now()) @db.Timestamp(6)
   updatedAt      DateTime  @default(now()) @db.Timestamp(6)
   family         family?   @relation(fields: [familyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "enrollment_fk0")
