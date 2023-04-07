@@ -24,7 +24,6 @@ export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, re
 
     return res.status(httpStatus.OK).send(enrollment);
   } catch (error) {
-    console.log(error)
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }

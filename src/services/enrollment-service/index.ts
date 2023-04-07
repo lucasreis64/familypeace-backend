@@ -15,11 +15,17 @@ async function getEnrollmentByUserId(userId: number): Promise<enrollmentWithFami
   };
 }
 
-async function updateOrCreate(userId: number, body: CreateEnrollmentParams): Promise<{enrollment: number}> {
+async function updateOrCreate(userId: number, body: CreateEnrollmentParams): Promise<{enrollmentId: number}> {
+  if(userId !== body.userId)
+    throw 400;
+    
+  if(body.birthday)
+    body.birthday = new Date(body.birthday);
+
   const enrollment = await enrollmentRepository.upsert(userId, body, exclude(body, "userId"));
-  
+
   return {
-    enrollment: enrollment.id
+    enrollmentId: enrollment.id
   }; 
 }
 
