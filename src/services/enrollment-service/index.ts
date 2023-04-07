@@ -25,5 +25,6 @@ async function updateOrCreate(userId: number, body: CreateEnrollmentParams): Pro
 
 const enrollmentService = {
   getEnrollmentByUserId,
+  updateOrCreate
 };
 export default enrollmentService;

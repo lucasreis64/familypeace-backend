@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { authenticateToken } from "@/middlewares";
-import { getEnrollmentByUser } from "@/controllers";
+import { authenticateToken, validateBody } from "@/middlewares";
+import { getEnrollmentByUser, postCreateOrUpdateEnrollment } from "@/controllers";
+import { createEnrollmentSchema } from "@/schemas/enrollment-schema";
 
 const enrollmentRouter = Router();
 
 enrollmentRouter
   .all("/*", authenticateToken)
-  .get("/", getEnrollmentByUser);
+  .get("/", getEnrollmentByUser)
+  .post("/", validateBody(createEnrollmentSchema), postCreateOrUpdateEnrollment);
 
 export { enrollmentRouter };

@@ -11,7 +11,20 @@ export async function getEnrollmentByUser(req: AuthenticatedRequest, res: Respon
 
     return res.status(httpStatus.OK).send(enrollment);
   } catch (error) {
-    console.error(error);
     return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}
+
+export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const { body } = req;
+
+  try {
+    const enrollment = await enrollmentsService.updateOrCreate(userId, body);
+
+    return res.status(httpStatus.OK).send(enrollment);
+  } catch (error) {
+    console.log(error)
+    return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }
