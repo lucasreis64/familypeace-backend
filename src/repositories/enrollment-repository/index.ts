@@ -38,4 +38,4 @@ const enrollmentRepository = {
   upsert
 };
 
-export default enrollmentRepository;
+export { enrollmentRepository };

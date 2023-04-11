@@ -1,7 +1,12 @@
 export type ApplicationError = {
-  name: string;
-  message: string;
+  name: string,
+  message: string,
 };
+
+export type createOrUpdateFamilyParams = {
+  id?: number,
+  name: string,
+}
 
 export type enrollmentWithFamily = {
     id: number,

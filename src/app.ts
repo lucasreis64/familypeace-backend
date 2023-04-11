@@ -4,6 +4,7 @@ import { usersRouter, authenticationRouter } from "@/routers";
 import { loadEnv, connectDb, disconnectDB } from "@/config";
 import { handleApplicationErrors } from "@/middlewares";
 import { enrollmentRouter } from "./routers/enrollment-router";
+import { familyRouter } from "./routers/family-router";
 
 loadEnv();
 
@@ -16,6 +17,7 @@ app
   .use("/sign-up", usersRouter)
   .use("/sign-in", authenticationRouter)
   .use("/enrollment", enrollmentRouter)
+  .use("/family", familyRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

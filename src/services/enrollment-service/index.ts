@@ -1,5 +1,5 @@
 import { enrollmentWithFamily, enrollmentWithObjectFamily } from "@/protocols";
-import enrollmentRepository, { CreateEnrollmentParams } from "@/repositories/enrollment-repository";
+import { CreateEnrollmentParams, enrollmentRepository } from "@/repositories";
 import { exclude } from "@/utils/prisma-utils";
 
 async function getEnrollmentByUserId(userId: number): Promise<enrollmentWithFamily> {

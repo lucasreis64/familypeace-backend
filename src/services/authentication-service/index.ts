@@ -1,5 +1,4 @@
-import sessionRepository from "@/repositories/session-repository";
-import userRepository from "@/repositories/user-repository";
+import { sessionRepository, userRepository } from "@/repositories";
 import { exclude } from "@/utils/prisma-utils";
 import { user } from "@prisma/client";
 import bcrypt from "bcrypt";

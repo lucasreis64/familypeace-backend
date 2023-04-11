@@ -11,4 +11,4 @@ const sessionRepository = {
   create,
 };
 
-export default sessionRepository;
+export { sessionRepository };

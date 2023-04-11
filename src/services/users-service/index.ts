@@ -1,5 +1,4 @@
-import enrollmentRepository from "@/repositories/enrollment-repository";
-import userRepository from "@/repositories/user-repository";
+import { enrollmentRepository, userRepository } from "@/repositories";
 import { user } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { duplicatedEmailError } from "./errors";
