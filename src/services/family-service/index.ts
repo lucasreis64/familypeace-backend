@@ -37,7 +37,8 @@ async function deleteFamily(id: number): Promise<{deletedId: number}> {
 
 const familyService = {
   createOrUpdateFamily,
-  deleteFamily
+  deleteFamily,
+  validateFamilyId
 };
 
 export { familyService };

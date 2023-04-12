@@ -1,6 +1,6 @@
 import { deleteFamily, postCreateOrUpdateFamily } from "@/controllers";
 import { authenticateToken, validateBody } from "@/middlewares";
-import { createOrUpdateFamilySchema } from "@/schemas/family-schema";
+import { createOrUpdateFamilySchema } from "@/schemas";
 import { Router } from "express";
 
 const familyRouter = Router();

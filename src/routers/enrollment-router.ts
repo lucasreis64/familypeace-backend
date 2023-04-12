@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authenticateToken, validateBody } from "@/middlewares";
 import { getEnrollmentByUser, postCreateOrUpdateEnrollment } from "@/controllers";
-import { createEnrollmentSchema } from "@/schemas/enrollment-schema";
+import { createEnrollmentSchema } from "@/schemas";
 
 const enrollmentRouter = Router();
 

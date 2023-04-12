@@ -5,6 +5,7 @@ import { loadEnv, connectDb, disconnectDB } from "@/config";
 import { handleApplicationErrors } from "@/middlewares";
 import { enrollmentRouter } from "./routers/enrollment-router";
 import { familyRouter } from "./routers/family-router";
+import { taskRouter } from "./routers/task-router";
 
 loadEnv();
 
@@ -18,6 +19,7 @@ app
   .use("/sign-in", authenticationRouter)
   .use("/enrollment", enrollmentRouter)
   .use("/family", familyRouter)
+  .use("/task", taskRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

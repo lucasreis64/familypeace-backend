@@ -1,3 +1,5 @@
+import { task } from "@prisma/client";
+
 export type ApplicationError = {
   name: string,
   message: string,
@@ -6,6 +8,14 @@ export type ApplicationError = {
 export type createOrUpdateFamilyParams = {
   id?: number,
   name: string,
+}
+
+export type createOrUpdateTaskParams = {
+  id?: number
+  name: string
+  when: Date
+  familyId: number
+  status: "pending" | "doing" | "done",
 }
 
 export type enrollmentWithFamily = {
