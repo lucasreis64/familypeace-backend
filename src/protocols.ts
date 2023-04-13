@@ -1,9 +1,39 @@
-import { task } from "@prisma/client";
-
 export type ApplicationError = {
   name: string,
   message: string,
 };
+
+export type taskWhereParams = {
+  familyId: number,
+  createdAt?: {
+    gte: Date,
+  },
+  status?: createOrUpdateTaskParams["status"],
+  taskMembers?: {
+    every: {
+      userId: number,
+    }
+  }
+}
+
+export type taskResult = {
+  task: {
+      id: number;
+      name: string;
+      familyId: number;
+      status: string;
+      taskMembers: {
+          userId: number;
+          name: string;
+      }[];
+  };
+}[]
+
+export type taskFilterParams = {
+  period: "day" | "week" | "month" | "all",
+  status: "pending" | "doing" | "done" | "all",
+  from: "family" | number;
+}
 
 export type createOrUpdateFamilyParams = {
   id?: number,

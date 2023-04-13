@@ -7,6 +7,7 @@ const mobilePhoneValidationSchema = Joi.string().min(14).max(15).custom(joiMobil
 export const createEnrollmentSchema = Joi.object<CreateEnrollmentParams>({
   familyId: Joi.number().min(1).strict(),
   userId: Joi.number().min(1).required().strict(),
+  name: Joi.string().min(3).max(30),
   birthday: Joi.string().isoDate(),
   phone: mobilePhoneValidationSchema,
   profilePicture: Joi.string()

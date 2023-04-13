@@ -1,9 +1,11 @@
 import { notFoundError } from "@/errors/not-found-error";
-import { createOrUpdateTaskParams } from "@/protocols";
-import { taskRepository } from "@/repositories";
+import { createOrUpdateTaskParams, taskFilterParams, taskResult } from "@/protocols";
+import { enrollmentRepository, taskRepository } from "@/repositories";
 import { exclude } from "@/utils/prisma-utils";
 import { task } from "@prisma/client";
 import { familyService } from "../family-service";
+import { invalidUserIdError } from "./errors";
+import { filterTask } from "./filterTask";
 
 async function validateTaskId(id: number): Promise<void> {
   const task = await taskRepository.findOne(id);
@@ -12,12 +14,32 @@ async function validateTaskId(id: number): Promise<void> {
     throw notFoundError();
 }
 
+async function validateIfUserIsFromFamily(userId: number, realFamilyId: number): Promise<void> {
+  const { familyId } = await enrollmentRepository.findFamilyByUserId(userId);
+
+  if(familyId !== realFamilyId)
+    throw invalidUserIdError();
+}
+
+async function getTasks(body: taskFilterParams, userId: number): Promise<taskResult> {
+  const { familyId } = await enrollmentRepository.findFamilyByUserId(userId);
+
+  if(typeof body.from === "number")
+    await validateIfUserIsFromFamily(userId, familyId);
+
+  const whereInput = filterTask(body, familyId);
+
+  const tasks = await taskRepository.findMany(whereInput);
+
+  return tasks;
+}
+
 async function createOrUpdateTask(body: createOrUpdateTaskParams): Promise<task> {
   let id = body?.id;
 
   if (id)
     await validateTaskId(id);
-  
+
   else
     id = -20;
 
@@ -41,7 +63,8 @@ async function deleteTask(id: number): Promise<{deletedId: number}> {
 
 const taskService= {
   createOrUpdateTask,
-  deleteTask
+  deleteTask,
+  getTasks
 };
 
 export { taskService };

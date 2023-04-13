@@ -9,6 +9,7 @@ datasource db {
 
 model enrollment {
   id             Int       @id(map: "enrollment_pk") @default(autoincrement())
+  name           String?   @db.VarChar(255)
   familyId       Int?
   userId         Int       @unique
   birthday       DateTime? @db.Timestamp(6)
