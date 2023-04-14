@@ -16,7 +16,6 @@ export async function getTasks(req: AuthenticatedRequest, res: Response) {
     if (error.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
     }
-    console.log(error);
   }
 }
 

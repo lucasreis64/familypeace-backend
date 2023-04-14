@@ -60,7 +60,7 @@ model task {
 
 model taskMembers {
   id        Int      @id(map: "taskMembers_pk") @default(autoincrement())
-  userId    Int
+  userId    Int      @unique
   taskId    Int
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
