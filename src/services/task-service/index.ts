@@ -15,9 +15,8 @@ async function validateTaskId(id: number): Promise<void> {
 }
 
 async function validateIfUserIsFromFamily(userId: number, realFamilyId: number): Promise<void> {
-  console.log(userId)
   const family = await enrollmentRepository.findFamilyByUserId(userId);
-  console.log(family);
+  
   if(!family || family.familyId !== realFamilyId)
     throw invalidUserIdError();
 }
