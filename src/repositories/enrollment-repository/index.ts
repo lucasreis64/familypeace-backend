@@ -45,7 +45,7 @@ export type UpdateEnrollmentParams = Omit<CreateEnrollmentParams, "userId" | "fa
 const enrollmentRepository = {
   findById,
   upsert,
-  findFamilyByUserId
+  findFamilyByUserId,
 };
 
 export { enrollmentRepository };

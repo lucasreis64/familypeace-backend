@@ -11,7 +11,7 @@ async function findOne(id: number) {
 }
 
 async function findMany(body: taskWhereParams) {
-  const tasks = await prisma.task.findMany({
+  return prisma.task.findMany({
     where: body,
     select: {
       id: true,
@@ -34,21 +34,6 @@ async function findMany(body: taskWhereParams) {
       }
     }
   });
-
-  return tasks.map((task) => ({
-    task: {
-      id: task.id,
-      name: task.name,
-      familyId: task.familyId,
-      status: task.status,
-      taskMembers: task.taskMembers.flatMap((taskMember) => {
-        return taskMember.user.enrollment.map((enrollment) => ({
-          userId: enrollment.userId,
-          name: enrollment.name
-        }));
-      })
-    }
-  }));
 }
 
 type createdOrUpdatedTaskParams = Omit<task, "createdAt" | "updatedAt" | "id">;

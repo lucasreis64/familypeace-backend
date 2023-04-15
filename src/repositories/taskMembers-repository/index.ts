@@ -1,15 +1,13 @@
 import { prisma } from "@/config";
 import { taskMembers } from "@prisma/client";
 
-async function findOne(userId: number) {
-  return prisma.task.findUnique({
-    where: {
-      userId
-    }
+async function findOne(body: {taskId: number, userId: number} | {id: number}) {
+  return prisma.taskMembers.findFirst({
+    where: body
   });
 }
 
-async function create(id: number, body: createTaskMembersParams) {
+async function create(body: createTaskMembersParams) {
   return prisma.taskMembers.create({
     data: body,
   });
@@ -25,10 +23,19 @@ async function remove(id: number) {
   });
 }
 
+async function removeMany(taskId: number) {
+  return prisma.taskMembers.deleteMany({
+    where: {
+      taskId
+    }
+  });
+}
+
 const taskMembersRepository = {
   create,
   remove,
-  findOne
+  findOne,
+  removeMany
 };
 
 export { taskMembersRepository };

@@ -3,6 +3,17 @@ export type ApplicationError = {
   message: string,
 };
 
+export type enrollmentWhereParams = {
+  userId: {
+    in: number[],
+  }
+}
+
+export type taskMembersParams = {
+  taskId: number,
+  userId: number
+}
+
 export type taskWhereParams = {
   familyId: number,
   createdAt?: {
@@ -17,7 +28,6 @@ export type taskWhereParams = {
 }
 
 export type taskResult = {
-  task: {
       id: number;
       name: string;
       familyId: number;
@@ -26,7 +36,6 @@ export type taskResult = {
           userId: number;
           name: string;
       }[];
-  };
 }[]
 
 export type taskFilterParams = {

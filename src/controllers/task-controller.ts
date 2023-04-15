@@ -16,6 +16,9 @@ export async function getTasks(req: AuthenticatedRequest, res: Response) {
     if (error.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
     }
+    if (error.name === "InvalidUserIdError") {
+      return res.sendStatus(httpStatus.FORBIDDEN);
+    }
   }
 }
 
@@ -25,7 +28,7 @@ export async function postCreateOrUpdateTask(req: AuthenticatedRequest, res: Res
   try {
     const task = await taskService.createOrUpdateTask(body);
 
-    return res.status(httpStatus.OK).send(task);
+    return res.status(httpStatus.CREATED).send(task);
   } catch (error) {
     if (error.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);

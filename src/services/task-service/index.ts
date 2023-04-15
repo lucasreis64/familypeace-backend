@@ -1,10 +1,10 @@
 import { notFoundError } from "@/errors/not-found-error";
 import { createOrUpdateTaskParams, taskFilterParams, taskResult } from "@/protocols";
-import { enrollmentRepository, taskRepository } from "@/repositories";
+import { enrollmentRepository, taskMembersRepository, taskRepository } from "@/repositories";
 import { exclude } from "@/utils/prisma-utils";
 import { task } from "@prisma/client";
+import { invalidUserIdError } from "@/errors";
 import { familyService } from "../family-service";
-import { invalidUserIdError } from "./errors";
 import { filterTask } from "./filterTask";
 
 async function validateTaskId(id: number): Promise<void> {
@@ -15,9 +15,10 @@ async function validateTaskId(id: number): Promise<void> {
 }
 
 async function validateIfUserIsFromFamily(userId: number, realFamilyId: number): Promise<void> {
-  const { familyId } = await enrollmentRepository.findFamilyByUserId(userId);
-
-  if(familyId !== realFamilyId)
+  console.log(userId)
+  const family = await enrollmentRepository.findFamilyByUserId(userId);
+  console.log(family);
+  if(!family || family.familyId !== realFamilyId)
     throw invalidUserIdError();
 }
 
@@ -31,7 +32,18 @@ async function getTasks(body: taskFilterParams, userId: number): Promise<taskRes
 
   const tasks = await taskRepository.findMany(whereInput);
 
-  return tasks;
+  return tasks.map((task) => ({
+    id: task.id,
+    name: task.name,
+    familyId: task.familyId,
+    status: task.status,
+    taskMembers: task.taskMembers.flatMap((taskMember) => {
+      return taskMember.user.enrollment.map((enrollment) => ({
+        userId: enrollment.userId,
+        name: enrollment.name
+      }));
+    })
+  }));
 }
 
 async function createOrUpdateTask(body: createOrUpdateTaskParams): Promise<task> {
@@ -56,6 +68,8 @@ async function createOrUpdateTask(body: createOrUpdateTaskParams): Promise<task>
 async function deleteTask(id: number): Promise<{deletedId: number}> {
   await validateTaskId(id);
 
+  await taskMembersRepository.removeMany(id);
+
   const deletedTask = await taskRepository.remove(id);
   
   return { deletedId: deletedTask.id };
@@ -64,7 +78,9 @@ async function deleteTask(id: number): Promise<{deletedId: number}> {
 const taskService= {
   createOrUpdateTask,
   deleteTask,
-  getTasks
+  getTasks,
+  validateTaskId,
+  validateIfUserIsFromFamily
 };
 
 export { taskService };

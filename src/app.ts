@@ -6,6 +6,7 @@ import { handleApplicationErrors } from "@/middlewares";
 import { enrollmentRouter } from "./routers/enrollment-router";
 import { familyRouter } from "./routers/family-router";
 import { taskRouter } from "./routers/task-router";
+import { taskMembersRouter } from "./routers/taskMembers-router";
 
 loadEnv();
 
@@ -20,6 +21,7 @@ app
   .use("/enrollment", enrollmentRouter)
   .use("/family", familyRouter)
   .use("/task", taskRouter)
+  .use("/taskmembers", taskMembersRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

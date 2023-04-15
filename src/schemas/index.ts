@@ -3,3 +3,4 @@ export * from "./authentication-schemas";
 export * from "./enrollment-schemas";
 export * from "./family-schemas";
 export * from "./task-schemas";
+export * from "./taskMembers-schemas";

@@ -1,9 +1,9 @@
+import { invalidCredentialsError } from "@/errors";
 import { sessionRepository, userRepository } from "@/repositories";
 import { exclude } from "@/utils/prisma-utils";
 import { user } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { invalidCredentialsError } from "./errors";
 
 async function signIn(params: SignInParams): Promise<SignInResult> {
   const { email, password } = params;
@@ -57,4 +57,4 @@ const authenticationService = {
 };
 
 export default authenticationService;
-export * from "./errors";
+export * from "../../errors/invalid-userid-error";
