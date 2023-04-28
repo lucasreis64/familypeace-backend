@@ -1,2 +1,0 @@
-build:
-  - command: ./prebuild.sh && npm run build
