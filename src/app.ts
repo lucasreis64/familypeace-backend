@@ -1,12 +1,8 @@
 import express, { Express } from "express";
 import cors from "cors";
-import { usersRouter, authenticationRouter } from "@/routers";
+import { usersRouter, authenticationRouter, enrollmentRouter, familyRouter, taskRouter, taskMembersRouter } from "@/routers";
 import { loadEnv, connectDb, disconnectDB } from "@/config";
 import { handleApplicationErrors } from "@/middlewares";
-import { enrollmentRouter } from "./routers/enrollment-router";
-import { familyRouter } from "./routers/family-router";
-import { taskRouter } from "./routers/task-router";
-import { taskMembersRouter } from "./routers/taskMembers-router";
 
 loadEnv();
 
