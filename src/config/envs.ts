@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
 
-export function loadEnv() {
+export async function loadEnv() {
   const path =
     process.env.NODE_ENV === "test"
       ? ".env.test"
@@ -10,5 +10,7 @@ export function loadEnv() {
         : ".env";
 
   const currentEnvs = dotenv.config({ path });
-  dotenvExpand.expand(currentEnvs);
+  return dotenvExpand.expand(currentEnvs);
 }
+
+loadEnv();
