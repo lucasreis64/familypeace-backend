@@ -9,6 +9,7 @@ async function findById(userId: number) {
       birthday: true,
       phone: true,
       profilePicture: true,
+      name: true,
       family: {
         select: {
           name: true,
