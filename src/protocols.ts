@@ -67,6 +67,7 @@ export type enrollmentWithFamily = {
 
 export type enrollmentWithObjectFamily = {
   id: number,
+  name: string,
   family?: {
     name: string | null,
   },
