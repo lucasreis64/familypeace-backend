@@ -1,6 +1,6 @@
 import { notFoundError } from "@/errors/not-found-error";
 import { createOrUpdateFamilyParams } from "@/protocols";
-import { familyRepository } from "@/repositories";
+import { enrollmentRepository, familyRepository } from "@/repositories";
 import { exclude } from "@/utils/prisma-utils";
 import { family } from "@prisma/client";
 
@@ -30,15 +30,29 @@ async function createOrUpdateFamily(body: createOrUpdateFamilyParams): Promise<c
 async function deleteFamily(id: number): Promise<{deletedId: number}> {
   await validateFamilyId(id);
 
+  await enrollmentRepository.deleteUserFamily(id);
+
   const deletedFamily = await familyRepository.remove(id);
   
   return { deletedId: deletedFamily.id };
 }
 
+async function updateUserFamily(userId: number, id: number | null): Promise<{updatedFamilyId: number}> {
+  if (id)
+    await validateFamilyId(id);
+
+  await enrollmentRepository.updateUserFamily(userId, { familyId: id });
+
+  const updatedFamily = await familyRepository.remove(id);
+  
+  return { updatedFamilyId: updatedFamily.id };
+}
+
 const familyService = {
   createOrUpdateFamily,
   deleteFamily,
-  validateFamilyId
+  validateFamilyId,
+  updateUserFamily,
 };
 
 export { familyService };

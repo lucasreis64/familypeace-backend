@@ -30,3 +30,19 @@ export async function deleteFamily(req: AuthenticatedRequest, res: Response) {
     }
   }
 }
+
+export async function updateUserFamily(req: AuthenticatedRequest, res: Response) {
+  const { id } = req.params;
+  const { familyId } = req.body;
+
+  try {
+    const family = await familyService.updateUserFamily(Number(id), familyId);
+
+    return res.status(httpStatus.OK).send(family);
+  } catch (error) {
+    if (error.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
+  }
+}
+

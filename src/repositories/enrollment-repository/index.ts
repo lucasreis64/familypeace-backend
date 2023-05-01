@@ -42,10 +42,34 @@ async function upsert(userId: number,
 export type CreateEnrollmentParams = Omit<Prisma.enrollmentUncheckedCreateInput, "id" | "createdAt" | "updatedAt">;
 export type UpdateEnrollmentParams = Omit<CreateEnrollmentParams, "userId" | "familyId">;
 
+async function updateUserFamily(userId: number,
+  updatedUserFamilyParams: { familyId: number | null },
+) {
+  return prisma.enrollment.update({
+    where: {
+      userId,
+    },
+    data: updatedUserFamilyParams,
+  });
+}
+
+async function deleteUserFamily(familyId: number) {
+  return prisma.enrollment.updateMany({
+    where: {
+      familyId
+    },
+    data: {
+      familyId: null
+    }
+  });
+}
+
 const enrollmentRepository = {
   findById,
   upsert,
   findFamilyByUserId,
+  updateUserFamily,
+  deleteUserFamily
 };
 
 export { enrollmentRepository };

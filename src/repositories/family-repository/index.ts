@@ -35,7 +35,7 @@ const familyRepository = {
   upsert,
   remove,
   findOne,
-  findMany
+  findMany,
 };
 
 export { familyRepository };

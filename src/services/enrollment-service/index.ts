@@ -1,5 +1,5 @@
 import { enrollmentWithFamily, enrollmentWithObjectFamily } from "@/protocols";
-import { CreateEnrollmentParams, enrollmentRepository } from "@/repositories";
+import { enrollmentRepository, UpdateEnrollmentParams } from "@/repositories";
 import { exclude } from "@/utils/prisma-utils";
 
 async function getEnrollmentByUserId(userId: number): Promise<enrollmentWithFamily> {
@@ -15,14 +15,11 @@ async function getEnrollmentByUserId(userId: number): Promise<enrollmentWithFami
   };
 }
 
-async function updateOrCreate(userId: number, body: CreateEnrollmentParams): Promise<{enrollmentId: number}> {
-  if(userId !== body.userId)
-    throw 400;
-    
+async function update(userId: number, body: UpdateEnrollmentParams): Promise<{enrollmentId: number}> {
   if(body.birthday)
     body.birthday = new Date(body.birthday);
 
-  const enrollment = await enrollmentRepository.upsert(userId, body, exclude(body, "userId"));
+  const enrollment = await enrollmentRepository.upsert(userId, { ...body, userId: -3006 }, body);
 
   return {
     enrollmentId: enrollment.id
@@ -31,6 +28,6 @@ async function updateOrCreate(userId: number, body: CreateEnrollmentParams): Pro
 
 const enrollmentService = {
   getEnrollmentByUserId,
-  updateOrCreate
+  update
 };
 export default enrollmentService;

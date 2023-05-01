@@ -20,7 +20,7 @@ export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, re
   const { body } = req;
 
   try {
-    const enrollment = await enrollmentsService.updateOrCreate(userId, body);
+    const enrollment = await enrollmentsService.update(userId, body);
 
     return res.status(httpStatus.OK).send(enrollment);
   } catch (error) {
