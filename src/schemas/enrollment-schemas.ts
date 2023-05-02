@@ -2,7 +2,7 @@ import { UpdateEnrollmentParams } from "@/repositories";
 import Joi from "joi";
 import { isValidMobilePhone } from "@brazilian-utils/brazilian-utils";
 
-const mobilePhoneValidationSchema = Joi.string().min(14).max(15).custom(joiMobilePhoneValidation);
+const mobilePhoneValidationSchema = Joi.string().min(13).max(15).custom(joiMobilePhoneValidation);
 
 export const updateEnrollmentSchema = Joi.object<UpdateEnrollmentParams>({
   name: Joi.string().min(3).max(30).required(),
