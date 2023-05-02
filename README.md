@@ -1,8 +1,6 @@
-Entendi, aqui está um exemplo de como ficaria o README do backend do projeto usando Node.js, TypeScript, Express, Prisma e PostgreSQL:
-
 # Family Peace - Backend
 
-This is the backend of Family Peace, a web application that allows families to manage their day-to-day tasks and responsibilities in a simple and organized way.
+This is a BackEnd Application built with Node.js and TypeScript. It provides a platform for families to manage their daily activities and promote better communication and organization.
 
 ## Getting Started
 
