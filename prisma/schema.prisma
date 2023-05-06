@@ -15,19 +15,21 @@ model enrollment {
   birthday       DateTime? @db.Timestamp(6)
   phone          String?   @db.VarChar(255)
   profilePicture String    @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
-  createdAt      DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt      DateTime  @default(now()) @db.Timestamp(6)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
   family         family?   @relation(fields: [familyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "enrollment_fk0")
   user           user      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "enrollment_fk1")
 }
 
 model family {
-  id         Int          @id(map: "family_pk") @default(autoincrement())
-  name       String       @db.VarChar(255)
-  createdAt  DateTime     @default(now()) @db.Timestamp(6)
-  updatedAt  DateTime     @default(now()) @db.Timestamp(6)
-  enrollment enrollment[]
-  task       task[]
+  id            Int            @id(map: "family_pk") @default(autoincrement())
+  name          String         @db.VarChar(255)
+  familyPicture String         @default("data:image/png;base64,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")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  enrollment    enrollment[]
+  task          task[]
+  familyAdmins  familyAdmins[]
 }
 
 model points {
@@ -41,8 +43,8 @@ model session {
   id        Int      @id(map: "session_pk") @default(autoincrement())
   userId    Int
   token     String
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   user      user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "session_fk0")
 }
 
@@ -52,30 +54,41 @@ model task {
   when        DateTime      @db.Timestamp(6)
   familyId    Int
   status      String        @db.VarChar(10)
-  updatedAt   DateTime      @default(now()) @db.Timestamp(6)
-  createdAt   DateTime      @default(now()) @db.Timestamp(6)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   family      family        @relation(fields: [familyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "task_fk0")
   taskMembers taskMembers[]
 }
 
 model taskMembers {
   id        Int      @id(map: "taskMembers_pk") @default(autoincrement())
-  userId    Int      
+  userId    Int
   taskId    Int
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   user      user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "taskMembers_fk0")
   task      task     @relation(fields: [taskId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "taskMembers_fk1")
 }
 
 model user {
-  id          Int           @id(map: "user_pk") @default(autoincrement())
-  email       String        @unique @db.VarChar(255)
-  password    String        @db.VarChar(255)
-  createdAt   DateTime      @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime      @default(now()) @db.Timestamp(6)
-  enrollment  enrollment[]
-  points      points[]
-  session     session[]
-  taskMembers taskMembers[]
+  id           Int            @id(map: "user_pk") @default(autoincrement())
+  email        String         @unique @db.VarChar(255)
+  password     String         @db.VarChar(255)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  enrollment   enrollment[]
+  points       points[]
+  session      session[]
+  taskMembers  taskMembers[]
+  familyAdmins familyAdmins[]
+}
+
+model familyAdmins {
+  id        Int      @id(map: "familyAdmins_pk") @default(autoincrement())
+  userId    Int
+  familyId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "familyAdmins_fk0")
+  family    family   @relation(fields: [familyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "familyAdmins_fk1")
 }

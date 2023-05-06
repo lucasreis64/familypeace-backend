@@ -47,6 +47,7 @@ export type taskFilterParams = {
 export type createOrUpdateFamilyParams = {
   id?: number,
   name: string,
+  familyPicture: string,
 }
 
 export type createOrUpdateTaskParams = {

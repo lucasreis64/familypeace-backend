@@ -24,7 +24,7 @@ async function createOrUpdateFamily(body: createOrUpdateFamilyParams): Promise<c
   
   const family = await familyRepository.upsert(id, exclude(body, "id"));
 
-  return { id: family.id, name: family.name };
+  return { id: family.id, name: family.name, familyPicture: family.familyPicture };
 }
 
 async function deleteFamily(id: number): Promise<{deletedId: number}> {
