@@ -5,9 +5,10 @@ import httpStatus from "http-status";
 
 export async function postCreateOrUpdateFamily(req: AuthenticatedRequest, res: Response) {
   const { body } = req;
+  const { userId } = req;
 
   try {
-    const family = await familyService.createOrUpdateFamily(body);
+    const family = await familyService.createOrUpdateFamily(body, userId);
 
     return res.status(httpStatus.OK).send(family);
   } catch (error) {

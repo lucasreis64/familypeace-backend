@@ -1,6 +1,7 @@
 import { notFoundError } from "@/errors/not-found-error";
 import { createOrUpdateFamilyParams } from "@/protocols";
 import { enrollmentRepository, familyRepository } from "@/repositories";
+import { familyAdminsRepository } from "@/repositories/familyAdmins-repository";
 import { exclude } from "@/utils/prisma-utils";
 import { family } from "@prisma/client";
 
@@ -13,7 +14,7 @@ async function validateFamilyId(id: number): Promise<void> {
 
 type createOrUpdateFamilyResult = Omit<family, "createdAt" | "updatedAt">
 
-async function createOrUpdateFamily(body: createOrUpdateFamilyParams): Promise<createOrUpdateFamilyResult> {
+async function createOrUpdateFamily(body: createOrUpdateFamilyParams, userId: number): Promise<createOrUpdateFamilyResult> {
   let id = body?.id;
 
   if (id)
@@ -23,6 +24,8 @@ async function createOrUpdateFamily(body: createOrUpdateFamilyParams): Promise<c
     id = -20;
   
   const family = await familyRepository.upsert(id, exclude(body, "id"));
+
+  await familyAdminsRepository.create(userId, family.id);
 
   return { id: family.id, name: family.name, familyPicture: family.familyPicture };
 }
