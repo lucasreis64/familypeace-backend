@@ -36,6 +36,8 @@ async function deleteFamily(id: number): Promise<{deletedId: number}> {
   await enrollmentRepository.deleteUserFamily(id);
 
   const deletedFamily = await familyRepository.remove(id);
+
+  await familyAdminsRepository.remove({ familyId: id });
   
   return { deletedId: deletedFamily.id };
 }
@@ -44,9 +46,7 @@ async function updateUserFamily(userId: number, id: number | null): Promise<{upd
   if (id)
     await validateFamilyId(id);
 
-  await enrollmentRepository.updateUserFamily(userId, { familyId: id });
-
-  const updatedFamily = await familyRepository.remove(id);
+  const updatedFamily = await enrollmentRepository.updateUserFamily(userId, { familyId: id });
   
   return { updatedFamilyId: updatedFamily.id };
 }

@@ -9,8 +9,20 @@ async function create(userId: number, familyId: number) {
   });
 }
 
+export type deleteFamilyAdminsParams = {
+  userId?: number,
+  familyId?: number,
+}
+
+async function remove(body: deleteFamilyAdminsParams) {
+  return prisma.familyAdmins.deleteMany({
+    where: body
+  });
+}
+
 const familyAdminsRepository = {
   create,
+  remove
 };
 
 export { familyAdminsRepository };
