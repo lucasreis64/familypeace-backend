@@ -11,6 +11,22 @@ async function upsert(id: number, body: createOrUpdateFamilyParams) {
   });
 }
 
+async function findFamily(userId: number) {
+  return prisma.enrollment.findFirst({
+    where: {
+      userId,
+    },
+    select: {
+      familyId: true,
+      family: {
+        select: {
+          name: true,
+        }
+      }
+    }
+  });
+}
+
 async function remove(id: number) {
   return prisma.family.delete({
     where: {
@@ -33,6 +49,7 @@ async function findMany() {
 
 const familyRepository = {
   upsert,
+  findFamily,
   remove,
   findOne,
   findMany,

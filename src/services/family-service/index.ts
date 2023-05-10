@@ -12,6 +12,17 @@ async function validateFamilyId(id: number): Promise<void> {
     throw notFoundError();
 }
 
+async function getFamilies() {
+  const families = await familyRepository.findMany();
+
+  return families;
+}
+
+async function getFamily(id: number): Promise<{ id: number, name: string }> {
+  const family = await familyRepository.findFamily(id);
+  return { id: family.familyId, name: family.family.name };
+}
+
 type createOrUpdateFamilyResult = Omit<family, "createdAt" | "updatedAt">
 
 async function createOrUpdateFamily(body: createOrUpdateFamilyParams, userId: number): Promise<createOrUpdateFamilyResult> {
@@ -52,6 +63,8 @@ async function updateUserFamily(userId: number, id: number | null): Promise<{upd
 }
 
 const familyService = {
+  getFamily,
+  getFamilies,
   createOrUpdateFamily,
   deleteFamily,
   validateFamilyId,

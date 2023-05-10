@@ -10,3 +10,8 @@ export const createOrUpdateFamilySchema = Joi.object<createOrUpdateFamilyParams>
 export const updateUserFamilySchema = Joi.object<{familyId: number}>({
   familyId: Joi.number().min(1).strict(),
 });
+
+export const getUserFamilySchema = Joi.object<{userId: number}>({
+  userId: Joi.number().min(1).strict(),
+});
+
