@@ -1,5 +1,13 @@
 import { prisma } from "@/config";
 
+async function findMany(familyId: number) {
+  return prisma.familyAdmins.findMany({
+    where: {
+      familyId
+    }
+  });
+}
+
 async function create(userId: number, familyId: number) {
   return prisma.familyAdmins.create({
     data: {
@@ -22,7 +30,8 @@ async function remove(body: deleteFamilyAdminsParams) {
 
 const familyAdminsRepository = {
   create,
-  remove
+  remove,
+  findMany
 };
 
 export { familyAdminsRepository };
