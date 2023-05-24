@@ -19,6 +19,7 @@ describe("createUser", () => {
     try {
       await userService.createUser({
         email: existingUser.email,
+        name: faker.name.firstName(),
         password: faker.internet.password(6),
       });
       fail("should throw duplicatedUserError");
@@ -30,6 +31,7 @@ describe("createUser", () => {
   it("should create user when given email is unique", async () => {
     const user = await userService.createUser({
       email: faker.internet.email(),
+      name: faker.name.firstName(),
       password: faker.internet.password(6),
     });
 
@@ -50,7 +52,8 @@ describe("createUser", () => {
     const rawPassword = faker.internet.password(6);
     const user = await userService.createUser({
       email: faker.internet.email(),
-      password: rawPassword,
+      name: faker.name.firstName(),
+      password: faker.internet.password(6),
     });
 
     const dbUser = await prisma.user.findUnique({
