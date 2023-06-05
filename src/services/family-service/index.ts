@@ -7,7 +7,7 @@ import { family } from "@prisma/client";
 
 async function validateFamilyId(id: number): Promise<void> {
   const family = await familyRepository.findOne(id);
-
+  
   if(!family)
     throw notFoundError();
 }

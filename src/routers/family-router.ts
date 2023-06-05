@@ -9,7 +9,7 @@ familyRouter
   .all("/*", authenticateToken)
   .get("/:userId", validateParams(getUserFamilySchema), getUserFamily)
   .post("/", validateBody(createOrUpdateFamilySchema), postCreateOrUpdateFamily)
-  .post("/user", validateBody(updateUserFamilySchema), updateUserFamily)
+  .put("/user", validateBody(updateUserFamilySchema), updateUserFamily)
   .delete("/:id", deleteFamily);
 
 export { familyRouter };

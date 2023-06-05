@@ -47,11 +47,10 @@ export async function deleteFamily(req: AuthenticatedRequest, res: Response) {
 }
 
 export async function updateUserFamily(req: AuthenticatedRequest, res: Response) {
-  const { id } = req.params;
-  const { familyId } = req.body;
+  const { familyId, userId } = req.body;
 
   try {
-    const family = await familyService.updateUserFamily(Number(id), familyId);
+    const family = await familyService.updateUserFamily(userId, familyId);
 
     return res.status(httpStatus.OK).send(family);
   } catch (error) {
