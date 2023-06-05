@@ -8,6 +8,15 @@ async function findMany(familyId: number) {
   });
 }
 
+async function findOne(userId: number, familyId: number) {
+  return prisma.familyAdmins.findFirst({
+    where: {
+      userId,
+      familyId
+    }
+  });
+}
+
 async function create(userId: number, familyId: number) {
   return prisma.familyAdmins.create({
     data: {
@@ -31,7 +40,8 @@ async function remove(body: deleteFamilyAdminsParams) {
 const familyAdminsRepository = {
   create,
   remove,
-  findMany
+  findMany,
+  findOne
 };
 
 export { familyAdminsRepository };
