@@ -74,7 +74,7 @@ async function deleteTask(id: number): Promise<{deletedId: number}> {
   return { deletedId: deletedTask.id };
 }
 
-const taskService= {
+const taskService = {
   createOrUpdateTask,
   deleteTask,
   getTasks,
