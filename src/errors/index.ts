@@ -6,4 +6,6 @@ export * from "./invalid-userid-error";
 export * from "./already-taskMember";
 export * from "./request-error";
 export * from "./not-admin-error";
-
+export * from "./already-admin-error";
+export * from "./already-not-admin-error";
+export * from "./not-family-member-error";
