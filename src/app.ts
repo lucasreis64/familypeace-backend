@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import cors from "cors";
-import { usersRouter, authenticationRouter, enrollmentRouter, familyRouter, taskRouter, taskMembersRouter } from "@/routers";
+import { usersRouter, authenticationRouter, enrollmentRouter, familyRouter, taskRouter, taskMembersRouter, familyAdminsRouter } from "@/routers";
 import { loadEnv, connectDb, disconnectDB } from "@/config";
 import { handleApplicationErrors } from "@/middlewares";
 
@@ -18,6 +18,7 @@ app
   .use("/family", familyRouter)
   .use("/task", taskRouter)
   .use("/taskmembers", taskMembersRouter)
+  .use("/familyadmins", familyAdminsRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
